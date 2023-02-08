@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "R5CRC37C95Z",
         "name": "com.DefaultCompany.CESCO",
-        "processId": 9534,
+        "processId": 10554,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -48,6 +48,30 @@
             "deviceId": "R5CRC37C95Z",
             "name": "com.DefaultCompany.CESCO",
             "processId": 9534,
+            "exited": false
+        },
+        {
+            "deviceId": "R5CRC37C95Z",
+            "name": "com.DefaultCompany.CESCO",
+            "processId": 21438,
+            "exited": false
+        },
+        {
+            "deviceId": "R5CRC37C95Z",
+            "name": "com.DefaultCompany.CESCO",
+            "processId": 9784,
+            "exited": false
+        },
+        {
+            "deviceId": "R5CRC37C95Z",
+            "name": "com.DefaultCompany.CESCO",
+            "processId": 10282,
+            "exited": false
+        },
+        {
+            "deviceId": "R5CRC37C95Z",
+            "name": "com.DefaultCompany.CESCO",
+            "processId": 10554,
             "exited": false
         }
     ],

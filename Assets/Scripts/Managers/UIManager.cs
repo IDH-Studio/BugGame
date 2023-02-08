@@ -17,8 +17,7 @@ public class UIManager : MonoBehaviour
 
     private List<GameObject> GameUI;
     private Stack<GameObject> GameUIStack;
-    private GameObject activeUI;
-    private GameObject prevUI;
+    [SerializeField] private GameObject GamePauseButton;
         
     void Awake()
     {
@@ -48,6 +47,7 @@ public class UIManager : MonoBehaviour
         GameUIStack.Clear();
         GameUIStack.Push(GameUI[(int)SCREEN.START]);
         GameUIStack.Peek().SetActive(true);
+        GamePauseButton.SetActive(false);
     }
 
     public void ActiveUI(SCREEN screen)
@@ -58,6 +58,8 @@ public class UIManager : MonoBehaviour
         // 선택한 UI 활성화
         GameUIStack.Push(GameUI[(int)screen]);
         GameUIStack.Peek().SetActive(true);
+        if (GameManager.instance.GameState != GAME_STATE.NONE) GamePauseButton.SetActive(true);
+        else GamePauseButton.SetActive(false);
     }
 
     public void InActiveUI()
@@ -66,6 +68,8 @@ public class UIManager : MonoBehaviour
         GameUIStack.Pop().SetActive(false);
         print(GameUIStack.Peek());
         GameUIStack.Peek().SetActive(true);
+        if (GameManager.instance.GameState != GAME_STATE.NONE) GamePauseButton.SetActive(true);
+        else GamePauseButton.SetActive(false);
     }
 
     public void GoMain()

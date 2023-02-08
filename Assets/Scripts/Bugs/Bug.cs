@@ -6,21 +6,26 @@ using CESCO;
 
 public class Bug : MonoBehaviour
 {
-    public float speed = 0.2f;
-    public float backSpeed = 1.5f;
-    public float size = 1f;
+    [Header("Bug Infos")]
+    [SerializeField] private float minSpeed;
+    [SerializeField] private float maxSpeed;
+    [SerializeField] private float backSpeed = 1.5f;
+    [SerializeField] private float size = 1f;
 
     private bool isCollision = false;
     private bool isMoving = true;
+    private SpriteRenderer sprite;
 
     ParticleSystem ps;
     protected Vector3 direction;
     protected Vector3 dirVec;
     protected float angle;
+    protected float speed = 0f;
     [SerializeField] protected float cycle;
     [SerializeField] protected float height;
     [SerializeField] private BUG_TYPE bugType;
     [SerializeField] private float deathDelay = 0.5f;
+    [SerializeField] private Animator anim;
 
     public BUG_TYPE BugType
     {
@@ -64,6 +69,9 @@ public class Bug : MonoBehaviour
         isMoving = true;
         ps = GetComponent<ParticleSystem>();
         angle = 0.0f;
+        sprite = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+        speed = Random.Range(minSpeed, maxSpeed);
     }
 
     private void Update()
@@ -74,6 +82,8 @@ public class Bug : MonoBehaviour
         dirVec = direction.normalized;
 
         LookTarget();
+
+        sprite.flipY = transform.position.x < GameManager.instance.CurrentTarget.transform.position.x ? true : false;
 
         // 충돌 검사 및 움직임
         if (isCollision)
@@ -107,6 +117,7 @@ public class Bug : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = true;
         isCollision = false;
         isMoving = true;
+        anim.SetBool("Death", false);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -117,6 +128,7 @@ public class Bug : MonoBehaviour
             Debug.Log("I'm die :c");
             isMoving = false;
             GetComponent<BoxCollider2D>().enabled = false;
+            anim.SetBool("Death", true);
             StartCoroutine(Death());
         }
     }

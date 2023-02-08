@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5404194242948490054}
   - component: {fileID: 2710361002276265893}
   - component: {fileID: 6687397496219335250}
+  - component: {fileID: -4581592245433916447}
   m_Layer: 0
   m_Name: Cicada
   m_TagString: Bug
@@ -37,7 +38,7 @@ Transform:
   - {fileID: 3349068539837277240}
   - {fileID: 3349068540767241238}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3349068539793204056
 SpriteRenderer:
@@ -80,12 +81,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.15425898, g: 0.027634388, b: 0.21698111, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c8a0bb5057e838349a265588ab1c037b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.6, y: 2.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -108,8 +109,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 0.8666667, y: 0.8666667}
+    newSize: {x: 2.6, y: 2.6}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -4931,13 +4932,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bea153c8be29304d8c8ae9b7467ae68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 2053369955759151811, guid: dcfe30add3fff1d4086de02da84220dc, type: 3}
-  speed: 0.2
-  backSpeed: 1.5
-  size: 1
+  minSpeed: 0.8
+  maxSpeed: 1.2
+  backSpeed: 2
+  size: 1.5
   cycle: 0
   height: 0
   bugType: 2
+  deathDelay: 0.5
+  anim: {fileID: 0}
+--- !u!95 &-4581592245433916447
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3349068539793204058}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1c1e70c0ecf2fcd44b808fba6f7224bc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3349068539837277241
 GameObject:
   m_ObjectHideFlags: 0
@@ -4954,7 +4977,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3349068539837277240
 Transform:
   m_ObjectHideFlags: 0
@@ -5038,7 +5061,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3349068540767241238
 Transform:
   m_ObjectHideFlags: 0

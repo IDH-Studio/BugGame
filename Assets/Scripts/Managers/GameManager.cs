@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     public StageManager stageManager;
     public SpawnManager spawnManager;
     public InputManager inputManager;
+    public PayManager payManager;
 
     // 게임 관련 변수
     private GAME_STATE gameState = GAME_STATE.NONE;
@@ -245,6 +246,8 @@ public class GameManager : MonoBehaviour
 
         // 정산 화면 출력
         screenManager.ChangeScreen(SCREEN.PAY);
+
+        payManager.PayMoney();
 
         // 벌레 스폰 중단
         spawnManager.StopSpawnBug();

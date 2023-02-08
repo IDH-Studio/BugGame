@@ -20,6 +20,7 @@ public class ShopManager : MonoBehaviour
     public void Open()
     {
         GameManager.instance.screenManager.ChangeScreen(SCREEN.SHOP);
+        shop.ShowShopInfo();
     }
 
     public void Close()

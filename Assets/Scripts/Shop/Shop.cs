@@ -59,7 +59,7 @@ public class Shop : MonoBehaviour
         shopItems[(int)tool].GetComponent<Button>().onClick.RemoveAllListeners(); // 버튼 이벤트 삭제
     }
 
-    private void OnEnable()
+    public void ShowShopInfo()
     {
         ShowItems();
     }
