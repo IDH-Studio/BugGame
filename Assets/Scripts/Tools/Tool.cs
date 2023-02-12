@@ -58,8 +58,11 @@ public class Tool : MonoBehaviour
         get { return toolName; }
     }
 
+    // 매우 느림, 느림, 보통, 빠름, 매우 빠름
     private float[] rates = { 1f, 0.7f, 0.5f, 0.3f, 0.1f };
-    private float[] radiuses = { 0.5f, 1f, 1.5f };
+    // 작음, 보통, 큼
+    private float[] radiuses = { 0.8f, 1.2f, 1.6f };
+    // 매우 느림, 느림, 보통, 빠름, 매우 빠름
     private float[] speeds = { 3f, 5f, 8f, 10f, 12f };
 
     // 속성 getter, setter

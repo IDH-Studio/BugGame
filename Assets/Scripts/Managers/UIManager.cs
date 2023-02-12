@@ -58,7 +58,7 @@ public class UIManager : MonoBehaviour
         // 선택한 UI 활성화
         GameUIStack.Push(GameUI[(int)screen]);
         GameUIStack.Peek().SetActive(true);
-        if (GameManager.instance.GameState != GAME_STATE.NONE) GamePauseButton.SetActive(true);
+        if (GameManager.instance.GameState != GAME_STATE.START) GamePauseButton.SetActive(true);
         else GamePauseButton.SetActive(false);
     }
 
@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
         GameUIStack.Pop().SetActive(false);
         print(GameUIStack.Peek());
         GameUIStack.Peek().SetActive(true);
-        if (GameManager.instance.GameState != GAME_STATE.NONE) GamePauseButton.SetActive(true);
+        if (GameManager.instance.GameState != GAME_STATE.START) GamePauseButton.SetActive(true);
         else GamePauseButton.SetActive(false);
     }
 
@@ -80,7 +80,6 @@ public class UIManager : MonoBehaviour
         GameUIStack.Peek().SetActive(false);
 
         // 화면, UI 초기화
-        GameManager.instance.screenManager.Init();
         Init();
     }
 }

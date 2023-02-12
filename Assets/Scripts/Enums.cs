@@ -19,7 +19,7 @@ namespace CESCO
 
     public enum GAME_STATE
     {
-        NONE,
+        START,
         RUNNING,
         PAUSE,
         PAY,
@@ -54,13 +54,14 @@ namespace CESCO
         FLY,
         CICADA,
         COCKROACH,
+        NONE,
     }
 
     public enum TOOL
     {
         HAND,
         FLY_SWATTER,
-        F_KILLER,
+        INSECTICIDE,
         TRAP,
         ELECTRIC_FLY_SWATTER,
         A,

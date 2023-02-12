@@ -56,6 +56,7 @@ public class ScreenManager : MonoBehaviour
         ScreenStack.Push(screen);
         // UI Ãâ·Â
         GameManager.instance.uiManager.ActiveUI(screen);
+        GameManager.instance.backgroundManager.ChangeBackground();
         BGM(ScreenStack.Peek());
     }
 
@@ -64,7 +65,15 @@ public class ScreenManager : MonoBehaviour
         ScreenStack.Pop();
         // UI ²ô±â
         GameManager.instance.uiManager.InActiveUI();
+        GameManager.instance.backgroundManager.ChangeBackground();
         BGM(ScreenStack.Peek());
+    }
+
+    public void GoMain()
+    {
+        Init();
+        GameManager.instance.uiManager.GoMain();
+        GameManager.instance.backgroundManager.ChangeBackground();
     }
 }
 

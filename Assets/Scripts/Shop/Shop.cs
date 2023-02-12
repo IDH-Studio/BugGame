@@ -48,7 +48,8 @@ public class Shop : MonoBehaviour
                 BuyItemObj.SetActive(true);
             });
 
-            shopItems.Insert((int)item.GetComponent<ShopItem>().ToolType, shopItem);
+            //shopItems.Insert((int)item.GetComponent<ShopItem>().ToolType, shopItem);
+            shopItems.Add(shopItem);
         }
     }
 

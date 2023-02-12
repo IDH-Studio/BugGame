@@ -13,11 +13,15 @@ public class SpawnManager : MonoBehaviour
 
     private float min;
     private float max;
+    private BUG_TYPE bugType;
+
+    public BUG_TYPE BugType { get { return bugType; } }
 
     private void Awake()
     {
         min = minDelay;
         max = maxDelay;
+        bugType = BUG_TYPE.NONE;
     }
 
     public void Init()
@@ -29,6 +33,7 @@ public class SpawnManager : MonoBehaviour
         min = minDelay;
         max = maxDelay;
         spawnCoroutine = null;
+        bugType = BUG_TYPE.NONE;
     }
 
     public void RemoveBug()
@@ -51,7 +56,7 @@ public class SpawnManager : MonoBehaviour
 
     private void ChangeBugs()
     {
-        BUG_TYPE bugType = (BUG_TYPE)Random.Range(0, System.Enum.GetNames(typeof(BUG_TYPE)).Length);
+        bugType = (BUG_TYPE)Random.Range(0, System.Enum.GetNames(typeof(BUG_TYPE)).Length - 1);
         foreach (GameObject spawner in spawners)
         {
             spawner.GetComponent<SpawnBug>().ChangeBug(bugType);

@@ -7,12 +7,12 @@ using TOOL = CESCO.TOOL;
 
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] private AudioSource BGMSound;
+    private AudioSource BGMSound;
     public AudioSource BGM
     {
         get { return BGMSound; }
     }
-    [SerializeField] private AudioSource EffectSound;
+    private AudioSource EffectSound;
     public AudioSource Effect
     {
         get { return EffectSound; }

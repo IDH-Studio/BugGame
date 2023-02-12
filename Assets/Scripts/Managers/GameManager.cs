@@ -26,7 +26,16 @@ public class GameManager : MonoBehaviour
 
     public float CameraSize;
 
-    // Managers
+    // 게임 관련 변수
+    private GAME_STATE gameState = GAME_STATE.START;
+    public GAME_STATE GameState { get { return gameState; } }
+
+    //private float minDelay = 0.6f;
+    //private float maxDelay = 1.9f;
+    [SerializeField] private uint payTime = 90;
+
+    [Header("▼ Managers")]
+    #region Managers
     public ToolManager toolManager;
     public TimeManager timeManager;
     public UIManager uiManager;
@@ -43,14 +52,8 @@ public class GameManager : MonoBehaviour
     public SpawnManager spawnManager;
     public InputManager inputManager;
     public PayManager payManager;
-
-    // 게임 관련 변수
-    private GAME_STATE gameState = GAME_STATE.NONE;
-    public GAME_STATE GameState { get { return gameState; } }
-
-    //private float minDelay = 0.6f;
-    //private float maxDelay = 1.9f;
-    [SerializeField] private uint payTime = 90;
+    public BackgroundManager backgroundManager;
+    #endregion
 
     private void Awake()
     {
@@ -105,9 +108,6 @@ public class GameManager : MonoBehaviour
         // 마우스 숨기기
         //mouseManager.InVisible();
 
-        // 화면 전환
-        screenManager.ChangeScreen(SCREEN.INGAME);
-
         // 타겟 스폰
         //target = prefabManager.RequestInstantiate(ObjType.TARGET).GetComponent<Target>();
         target.SetActive(true);
@@ -123,39 +123,36 @@ public class GameManager : MonoBehaviour
         // 플레이어 스폰
         //player = prefabManager.RequestInstantiate(ObjType.PLAYER).GetComponent<Player>();
         player.SetActive(true);
+
+        // 화면 전환
+        screenManager.ChangeScreen(SCREEN.INGAME);
     }
 
     public void GameOver()
     {
         // 게임 오버 조건
         GameEnd();
-        Debug.Log("게임 오버!");
-        uiManager.GoMain();
     }
 
     public void GameEnd()
     {
         // 플레이어, 타겟, 벌레 모두 삭제
-        //Destroy(GameObject.FindGameObjectWithTag("Player"));
         player.SetActive(false);
-        //Destroy(GameObject.FindGameObjectWithTag("Target"));
         target.SetActive(false);
-        //foreach (GameObject bug in GameObject.FindGameObjectsWithTag("Bug"))
-        //{
-        //    Destroy(bug);
-        //}
         spawnManager.RemoveBug();
 
         // 게임 상태 NONE으로 변경
-        gameState = GAME_STATE.NONE;
+        gameState = GAME_STATE.START;
         Time.timeScale = 0;
         mouseManager.Visible();
         CancelInvoke("BugSpawn");
 
         // 강화, 상점도 다 초기화 해야 함
+        // 매니저 초기화
         reinforceManager.Init();
         shopManager.Init();
         spawnManager.Init();
+        screenManager.GoMain();
 
         // 최종 스코어 저장 및 초기화
         int finishScore = scoreManager.ScoreInit();
@@ -267,7 +264,7 @@ public class GameManager : MonoBehaviour
     {
         // 게임을 종료시키고 메인 화면으로 이동한다.
         GameEnd();
-        uiManager.GoMain();
+        screenManager.GoMain();
     }
 
     public void GameExit()
