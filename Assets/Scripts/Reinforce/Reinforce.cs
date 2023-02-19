@@ -39,6 +39,13 @@ public class Reinforce : MonoBehaviour
         hasPlayerTools.Add(tool);
     }
 
+    public void RemoveTool(GameObject tool)
+    {
+        int index = hasPlayerTools.IndexOf(tool);
+        hasPlayerTools.Remove(tool);
+        Destroy(canSelectToolObj.transform.GetChild(index).gameObject);
+    }
+
     public void ShowMoney()
     {
         showPlayerMoney.text = GameManager.instance.CurrentPlayer.Money + "¿ø";

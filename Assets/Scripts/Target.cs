@@ -7,41 +7,35 @@ using TMPro;
 public class Target : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI showHP;
-    private float hp = 200;
+    [SerializeField] private float hp;
 
-    public float HP
-    {
-        get { return hp; }
-    }
+    private float healthPoint;
 
-    public void Init()
-    {
-        hp = 200;
-    }
+    public float HP { get { return healthPoint; } }
 
-    private void OnDisable()
-    {
-        Init();
-    }
+
+    private void Awake() { Init(); }
+
+    public void Init() { healthPoint = hp; }
+
+    void ShowHP() { showHP.text = "HP: " + healthPoint; }
+
+
+    private void OnDisable() { Init(); }
 
     private void OnEnable()
     {
         transform.position = Vector3.zero;
-        showHP.text = "HP: " + hp;
+        ShowHP();
     }
 
-    //private void Start()
-    //{
-    //    transform.position = Vector3.zero;
-    //    showHP.text = "HP: " + hp;
-    //}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Bug")
         {
-            hp -= 10;
-            showHP.text = "HP: " + hp;
+            healthPoint -= 10;
+            ShowHP();
         }
     }
 }

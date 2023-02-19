@@ -101,7 +101,7 @@ public class SoundManager : MonoBehaviour
 
     public void EffectPlay(TOOL tool)
     {
-        EffectSound.clip = EffectAudioClips[(int)tool];
-        EffectSound.Play();
+        //EffectSound.clip = EffectAudioClips[(int)tool];
+        //EffectSound.Play();
     }
 }

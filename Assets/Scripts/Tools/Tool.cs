@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using CESCO;
 using UnityEditor;
+using UnityEditor.Tilemaps;
 
 public class Tool : MonoBehaviour
 {
+    #region 도구 설정
     // 연사 속도
     // 매우 느림, 느림, 보통, 빠름, 매우 빠름
     //     1,     0.7,  0.5,  0.3,     0.1
-    [SerializeField] float hitDelay = .5f;
+    [SerializeField] protected float hitDelay = .5f;
+    public float Delay { get { return hitDelay; } }
     [SerializeField] private TOOL_SPEED toolRate;
     public TOOL_SPEED ToolRate
     {
@@ -20,7 +23,8 @@ public class Tool : MonoBehaviour
     // 범위
     // 작음, 보통, 큼
     //  0.5,  1,   1.5
-    [SerializeField] float radius = 1f;
+    [SerializeField] protected float radius = 1f;
+    public float Radius { get { return radius; } }
     [SerializeField] private TOOL_RADIUS toolRadius;
     public TOOL_RADIUS ToolRadius
     {
@@ -31,7 +35,7 @@ public class Tool : MonoBehaviour
     // 이동 속도
     // 매우 느림, 느림, 보통, 빠름, 매우 빠름
     //     0.5,    0.7,   1,   1.3,    1.5
-    [SerializeField] float speed = 10f;
+    [SerializeField] protected float speed = 10f;
     public float Speed { get { return speed; } }
     [SerializeField] private TOOL_SPEED toolSpeed;
     public TOOL_SPEED ToolSpeed
@@ -40,9 +44,15 @@ public class Tool : MonoBehaviour
         set { toolSpeed = value; }
     }
 
-    [SerializeField] GameObject HitObj;
-    [SerializeField] GameObject HitCheckObj;
-    [SerializeField] TOOL tool;
+    // 매우 느림, 느림, 보통, 빠름, 매우 빠름
+    private float[] rates = { 1f, 0.7f, 0.5f, 0.3f, 0.1f };
+    // 작음, 보통, 큼
+    private float[] radiuses = { 0.8f, 1.2f, 1.6f };
+    // 매우 느림, 느림, 보통, 빠름, 매우 빠름
+    private float[] speeds = { 3f, 5f, 8f, 10f, 12f };
+    #endregion
+
+    [SerializeField] protected TOOL tool;
     public TOOL ToolType
     {
         get { return tool; }
@@ -50,23 +60,24 @@ public class Tool : MonoBehaviour
 
     public bool hasPlayer = false;
 
-    private bool canHit = true;
-    [SerializeField] private string toolName;
+    protected bool isPressed = false;
+    protected bool canHit;
+    public bool CanHit { get { return canHit; } }
 
+    [SerializeField] private string toolName;
     public string ToolName
     {
         get { return toolName; }
     }
 
-    // 매우 느림, 느림, 보통, 빠름, 매우 빠름
-    private float[] rates = { 1f, 0.7f, 0.5f, 0.3f, 0.1f };
-    // 작음, 보통, 큼
-    private float[] radiuses = { 0.8f, 1.2f, 1.6f };
-    // 매우 느림, 느림, 보통, 빠름, 매우 빠름
-    private float[] speeds = { 3f, 5f, 8f, 10f, 12f };
+    [SerializeField] protected float damage;
+    public float Damage { get { return damage; } }
 
-    // 속성 getter, setter
-    public string GetRate()
+    [SerializeField] protected Sprite toolImage;
+    public Sprite ToolImage { get { return toolImage; } }
+
+    #region 속성 getter, setter
+    public string GetRateText()
     {
         switch (toolRate)
         {
@@ -85,7 +96,7 @@ public class Tool : MonoBehaviour
         }
     }
 
-    public string GetRadius()
+    public string GetRadiusText()
     {
         switch (toolRadius)
         {
@@ -100,7 +111,7 @@ public class Tool : MonoBehaviour
         }
     }
     
-    public string GetSpeed()
+    public string GetSpeedText()
     {
         switch (toolSpeed)
         {
@@ -121,137 +132,61 @@ public class Tool : MonoBehaviour
 
     public void SetRate()
     {
-        //switch (toolRate)
-        //{
-        //    case TOOL_SPEED.SUPER_SLOW:
-        //        hitDelay = rates[0];
-        //        break;
-        //    case TOOL_SPEED.SLOW:
-        //        hitDelay = rates[1];
-        //        break;
-        //    case TOOL_SPEED.NORMAL:
-        //        hitDelay = rates[2];
-        //        break;
-        //    case TOOL_SPEED.FAST:
-        //        hitDelay = rates[3];
-        //        break;
-        //    case TOOL_SPEED.SUPER_FAST:
-        //        hitDelay = rates[4];
-        //        break;
-        //}
         hitDelay = rates[(int)toolRate];
     }
 
     private void SetRate(TOOL_SPEED attr)
     {
-        //switch (attr)
-        //{
-        //    case TOOL_SPEED.SUPER_SLOW:
-        //        hitDelay = rates[0];
-        //        break;
-        //    case TOOL_SPEED.SLOW:
-        //        hitDelay = rates[1];
-        //        break;
-        //    case TOOL_SPEED.NORMAL:
-        //        hitDelay = rates[2];
-        //        break;
-        //    case TOOL_SPEED.FAST:
-        //        hitDelay = rates[3];
-        //        break;
-        //    case TOOL_SPEED.SUPER_FAST:
-        //        hitDelay = rates[4];
-        //        break;
-        //}
         hitDelay = rates[(int)attr];
     }
 
     public void SetRadius()
     {
-        //switch (toolRadius)
-        //{
-        //    case TOOL_RADIUS.SMALL:
-        //        radius = radiuses[0];
-        //        break;
-        //    case TOOL_RADIUS.MEDIUM:
-        //        radius = radiuses[1];
-        //        break;
-        //    case TOOL_RADIUS.LARGE:
-        //        radius = radiuses[2];
-        //        break;
-        //}
         radius = radiuses[(int)toolRadius];
         transform.localScale = new Vector3(radius, radius, radius);
     }
 
     private void SetRadius(TOOL_RADIUS attr)
     {
-        //switch (attr)
-        //{
-        //    case TOOL_RADIUS.SMALL:
-        //        radius = radiuses[0];
-        //        break;
-        //    case TOOL_RADIUS.MEDIUM:
-        //        radius = radiuses[1];
-        //        break;
-        //    case TOOL_RADIUS.LARGE:
-        //        radius = radiuses[2];
-        //        break;
-        //}
         radius = radiuses[(int)attr];
         transform.localScale = new Vector3(radius, radius, radius);
     }
 
     public void SetSpeed()
     {
-        //switch (toolSpeed)
-        //{
-        //    case TOOL_SPEED.SUPER_SLOW:
-        //        speed = speeds[0];
-        //        break;
-        //    case TOOL_SPEED.SLOW:
-        //        speed = speeds[1];
-        //        break;
-        //    case TOOL_SPEED.NORMAL:
-        //        speed = speeds[2];
-        //        break;
-        //    case TOOL_SPEED.FAST:
-        //        speed = speeds[3];
-        //        break;
-        //    case TOOL_SPEED.SUPER_FAST:
-        //        speed = speeds[4];
-        //        break;
-        //}
         speed = speeds[(int)toolSpeed];
     }
 
     private void SetSpeed(TOOL_SPEED attr)
     {
-        //switch (attr)
-        //{
-        //    case TOOL_SPEED.SUPER_SLOW:
-        //        speed = speeds[0];
-        //        break;
-        //    case TOOL_SPEED.SLOW:
-        //        speed = speeds[1];
-        //        break;
-        //    case TOOL_SPEED.NORMAL:
-        //        speed = speeds[2];
-        //        break;
-        //    case TOOL_SPEED.FAST:
-        //        speed = speeds[3];
-        //        break;
-        //    case TOOL_SPEED.SUPER_FAST:
-        //        speed = speeds[4];
-        //        break;
-        //}
         speed = speeds[(int)attr];
+    }
+    #endregion
+
+    protected void SetRateValue(float[] values)
+    {
+        if (values.Length != rates.Length) { print("속성 값은 " + rates.Length + "개가 되어야 합니다."); return; }
+
+        rates = values;
+    }
+
+    protected void SetRadiusValue(float[] values)
+    {
+        if (values.Length != radiuses.Length) { print("속성 값은 " + radiuses.Length + "개가 되어야 합니다."); return; }
+
+        radiuses = values;
+    }
+
+    protected void SetSpeedValue(float[] values)
+    {
+        if (values.Length != speeds.Length) { print("속성 값은 " + speeds.Length + "개가 되어야 합니다."); return; }
+
+        speeds = values;
     }
 
     private void Init()
     {
         transform.localScale = new Vector3(radius, radius, radius);
-        HitObj.transform.localScale = new Vector3(radius, radius, radius);
-        HitCheckObj.transform.localScale = new Vector3(radius, radius, radius);
         canHit = true;
     }
 
@@ -293,13 +228,50 @@ public class Tool : MonoBehaviour
         Init();
     }
 
-    private void OnEnable()
+    protected void FixedUpdate()
     {
-        Init();
-        //setHitObj(radius);
+        // 움직임 (모든 도구의 공통된 부분)
+        if (GameManager.instance.screenManager.CurrentScreen() != SCREEN.INGAME) return;
+
+        if (GameManager.instance.CurrentPlayer.JoyStick.IsTouch)
+        {
+            Move(GameManager.instance.CurrentPlayer.JoyStick.MovePosition);
+        }
+
+        // PC 테스트 전용
+        Vector2 movePos = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        Move(movePos.normalized);
     }
 
-    public void Move(Vector3 movePosition)
+    private void Update()
+    {
+        // 도구마다 기능이 달라진다.
+        if (Input.GetKeyDown(KeyCode.Space)) Hit();
+    }
+
+    public virtual void HitButtonDown()
+    {
+        // 모든 도구가 공통으로 가짐
+        Hit();
+        print("Hit Button Down");
+    }
+    
+    public virtual void HitButtonUp()
+    {
+        // 모든 도구가 공통으로 가짐
+    }
+
+    public void SetTool()
+    {
+        GameManager.instance.CurrentPlayer.CurrentHitPos.GetComponent<SpriteRenderer>().sprite = toolImage;
+    }
+
+    protected void OnEnable()
+    {
+        Init();
+    }
+
+    public virtual void Move(Vector3 movePosition)
     {
         //// 마우스 좌표를 월드 좌표로 변환
         //Vector3 mPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -307,7 +279,7 @@ public class Tool : MonoBehaviour
         //// 마우스 좌표에 따라 오브젝트 이동
         //transform.position = new Vector3(mPos.x * speed, mPos.y * speed, 5);
 
-        //// 마우스 왼쪽 클릭 시 (공격)
+        // 스크린 벗어나지 못하게 막음
         if (transform.position.x < -(GameManager.instance.CameraSize * 2))
         {
             transform.position = new Vector2(-(GameManager.instance.CameraSize * 2), transform.position.y);
@@ -335,11 +307,9 @@ public class Tool : MonoBehaviour
         hasPlayer = true;
     }
 
-    public void Hit()
+    public virtual void Hit()
     {
         if (!canHit) return;
-        //Instantiate(HitObj, transform.position, transform.rotation).GetComponent<HitObjScript>().changeRadius(radius);
-        //Instantiate(HitCheckObj, transform.position, transform.rotation).GetComponent<HitCheckScript>().changeRadius(radius);
 
         // 때린 장소 표시 오브젝트 생성
         GameObject showHitObj = GameManager.instance.prefabManager.GetHit(HIT_OBJ_TYPE.SHOW_HIT);
@@ -347,26 +317,34 @@ public class Tool : MonoBehaviour
         GameObject checkHitObj = GameManager.instance.prefabManager.GetHit(HIT_OBJ_TYPE.CHECK_HIT);
 
         // 오브젝트 크기 변경
-        showHitObj.GetComponent<HitObjScript>().changeRadius(radius);
-        checkHitObj.GetComponent<HitCheckScript>().changeRadius(radius);
+        showHitObj.GetComponent<HitObjScript>().ChangeInfo(radius, hitDelay);
+        checkHitObj.GetComponent<HitCheckScript>().ChangeInfo(radius, damage, tool);
+
+        showHitObj.GetComponent<HitObjScript>().ChangeImage();
 
         // 도구 위치로 오브젝트 이동
-        showHitObj.transform.position = transform.position;
-        checkHitObj.transform.position = transform.position;
-
-        checkHitObj.GetComponent<HitCheckScript>().changeRadius(radius);
+        showHitObj.GetComponent<HitObjScript>().Show(transform.position);
+        checkHitObj.GetComponent<HitCheckScript>().Show(transform.position);
 
         // 때리기 쿨타임
         canHit = false;
         StartCoroutine(HitDelay());
 
+        // 때리는 애니메이션 재생
+        GameManager.instance.CurrentPlayer.CurrentHitPos.GetComponent<ShowHitPos>().PlayHitAnimation();
+
         // 때리는 소리 재생
         GameManager.instance.soundManager.EffectPlay(tool);
     }
-
+    
     protected IEnumerator HitDelay()
     {
         yield return new WaitForSeconds(hitDelay);
         canHit = !canHit;
+    }
+
+    public void ChangePos(Vector3 pos)
+    {
+        transform.position = pos;
     }
 }

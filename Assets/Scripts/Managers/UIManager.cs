@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     public GameObject pay;
     public GameObject reinforce;
     public GameObject shop;
+    public GameObject gameOver;
+    public GameObject gameRule;
 
     private List<GameObject> GameUI;
     private Stack<GameObject> GameUIStack;
@@ -31,6 +33,8 @@ public class UIManager : MonoBehaviour
         GameUI.Insert((int)SCREEN.PAY, pay);
         GameUI.Insert((int)SCREEN.REINFORCE, reinforce);
         GameUI.Insert((int)SCREEN.SHOP, shop);
+        GameUI.Insert((int)SCREEN.GAMEOVER, gameOver);
+        GameUI.Insert((int)SCREEN.GAMERULE, gameRule);
 
         // 모든 UI를 비활성화 한 뒤
         foreach(GameObject gameUI in GameUI)

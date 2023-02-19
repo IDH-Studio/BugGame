@@ -68,6 +68,11 @@ public class ReinforceManager : MonoBehaviour
         reinforce.AddTool(tool);
     }
 
+    public void RemoveTool(GameObject tool)
+    {
+        reinforce.RemoveTool(tool);
+    }
+
     public void SelectTool(ref GameObject selectTool, Price price)
     {
         currentSelectTool = selectTool;

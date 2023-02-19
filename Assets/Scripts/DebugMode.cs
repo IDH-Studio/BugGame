@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using CESCO;
 
 public class DebugMode : MonoBehaviour
 {
@@ -41,5 +42,16 @@ public class DebugMode : MonoBehaviour
         GameManager.instance.CurrentPlayer.Money = money;
         shop.ShowMoney();
         inputField.text = "";
+    }
+
+    public void PlayerGetTool(int tool)
+    {
+        GameManager.instance.toolManager.GivePlayer((TOOL)tool);
+        GameManager.instance.shopManager.UnLockTool((TOOL)tool);
+    }
+
+    public void GivePlayerMoney()
+    {
+        GameManager.instance.CurrentPlayer.Money = 100000;
     }
 }

@@ -65,9 +65,9 @@ public class ShowToolDetail : MonoBehaviour
 
     public void ShowAttributes()
     {
-        toolRateOfHit.text = selectToolScript.GetRate();
-        toolRadius.text = selectToolScript.GetRadius();
-        toolSpeed.text = selectToolScript.GetSpeed();
+        toolRateOfHit.text = selectToolScript.GetRateText();
+        toolRadius.text = selectToolScript.GetRadiusText();
+        toolSpeed.text = selectToolScript.GetSpeedText();
     }
 
     public Price ShowPrices()

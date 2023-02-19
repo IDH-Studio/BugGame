@@ -19,11 +19,6 @@ public class JoyStick : MonoBehaviour
         get { return isTouch; }
     }
 
-    //public void Init()
-    //{
-
-    //}
-
     void Start()
     {
         //gameObject.SetActive(false);

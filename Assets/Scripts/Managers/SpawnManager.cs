@@ -65,7 +65,7 @@ public class SpawnManager : MonoBehaviour
 
     public void StartSpawnBug()
     {
-        ChangeBugs();
+        if(GameManager.instance.GameState == GAME_STATE.RUNNING) ChangeBugs();
         int index = Random.Range(0, spawners.Length);
         float delay = Random.Range(1f, 3f);
         spawnCoroutine = StartCoroutine(BugSpawn(delay, index));

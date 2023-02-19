@@ -7,8 +7,8 @@ namespace CESCO
     public enum OBJ_TYPE
     {
         PLAYER_HAS,
-        TARGET,
-        BUG,
+        GAUGE_IMAGE,
+        GAUGE_BG_IMAGE,
     }
 
     public enum HIT_OBJ_TYPE
@@ -34,6 +34,8 @@ namespace CESCO
         PAY,
         REINFORCE,
         SHOP,
+        GAMEOVER,
+        GAMERULE,
     }
 
     public enum TOUCH_SCREEN

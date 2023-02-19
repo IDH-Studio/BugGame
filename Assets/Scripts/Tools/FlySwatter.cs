@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using CESCO;
 
+/*
+ * 파리채는 맨손에 비해 범위가 조금 더 크다.
+*/
+
 public class FlySwatter : Tool
 {
-    new void Awake()
+    private new void Awake()
     {
-        base.Awake(TOOL_SPEED.SLOW, TOOL_RADIUS.LARGE, "파리채");
+        base.Awake();
+
+        float[] radiusValue = { 1.2f, 1.6f, 2f };
+        SetRadiusValue(radiusValue);
     }
 }

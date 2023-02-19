@@ -55,16 +55,32 @@ public class SettingManager : MonoBehaviour
 
     public void OnBGMSliderDown()
     {
-        int spriteIndex = (int)(BGM.value / soundStandard);
-        spriteIndex = spriteIndex > 3 ? 3 : spriteIndex;
+        int spriteIndex;
+        if (BGM.value == 0)
+        {
+            spriteIndex = 0;
+        }
+        else
+        {
+            spriteIndex = (int)(BGM.value / soundStandard) + 1;
+            spriteIndex = spriteIndex > 4 ? 4 : spriteIndex;
+        }
 
         BGMHandle.sprite = speakerSprites[spriteIndex];
     }
 
     public void OnEffectSliderDown()
     {
-        int spriteIndex = (int)(Effect.value / soundStandard);
-        spriteIndex = spriteIndex > 3 ? 3 : spriteIndex;
+        int spriteIndex;
+        if (Effect.value == 0)
+        {
+            spriteIndex = 0;
+        }
+        else
+        {
+            spriteIndex = (int)(Effect.value / soundStandard) + 1;
+            spriteIndex = spriteIndex > 4 ? 4 : spriteIndex;
+        }
 
         EffectHandle.sprite = speakerSprites[spriteIndex];
     }

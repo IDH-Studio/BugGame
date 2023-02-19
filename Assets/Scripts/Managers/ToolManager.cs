@@ -33,15 +33,11 @@ public class ToolManager : MonoBehaviour
 
     public GameObject GivePlayer(TOOL tool)
     {
-        //GameObject giveTool = tools[(int)tool];
-        //giveTool.GetComponent<Tool>().HasPlayer();
-        //GameManager.instance.reinforceManager.AddTool(giveTool);
         return GameManager.instance.CurrentPlayer.GetTool(tool, tools[(int)tool]);
     }
 
     public GameObject GiveTool(TOOL tool)
     {
-        //tools[(int)tool].GetComponent<Tool>().HasPlayer();
         return tools[(int)tool];
     }
 

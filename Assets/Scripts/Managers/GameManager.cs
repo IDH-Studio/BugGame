@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using ObjType = CESCO.OBJ_TYPE;
 using CESCO;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject target;
+    [SerializeField] private TextMeshProUGUI finalScore;
 
     public Player CurrentPlayer
     {
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
     // 게임 관련 변수
     private GAME_STATE gameState = GAME_STATE.START;
     public GAME_STATE GameState { get { return gameState; } }
+    private int level = 1;
+    public int Level { get { return level; } }
 
     //private float minDelay = 0.6f;
     //private float maxDelay = 1.9f;
@@ -99,6 +102,7 @@ public class GameManager : MonoBehaviour
         scoreManager.Init();
         gameState = GAME_STATE.RUNNING;
         Time.timeScale = 1;
+        level = 1;
     }
 
     public void GameStart()
@@ -109,7 +113,6 @@ public class GameManager : MonoBehaviour
         //mouseManager.InVisible();
 
         // 타겟 스폰
-        //target = prefabManager.RequestInstantiate(ObjType.TARGET).GetComponent<Target>();
         target.SetActive(true);
 
         // 벌레(적) 스폰
@@ -121,7 +124,6 @@ public class GameManager : MonoBehaviour
         timeManager.TimerStart();
 
         // 플레이어 스폰
-        //player = prefabManager.RequestInstantiate(ObjType.PLAYER).GetComponent<Player>();
         player.SetActive(true);
 
         // 화면 전환
@@ -130,32 +132,34 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        print("Game Over!");
+        screenManager.ChangeScreen(SCREEN.GAMEOVER);
         // 게임 오버 조건
         GameEnd();
     }
 
     public void GameEnd()
     {
-        // 플레이어, 타겟, 벌레 모두 삭제
-        player.SetActive(false);
-        target.SetActive(false);
-        spawnManager.RemoveBug();
-
         // 게임 상태 NONE으로 변경
         gameState = GAME_STATE.START;
         Time.timeScale = 0;
         mouseManager.Visible();
         CancelInvoke("BugSpawn");
 
+        // 플레이어, 타겟, 벌레 모두 삭제
+        player.SetActive(false);
+        target.SetActive(false);
+        spawnManager.RemoveBug();
+
         // 강화, 상점도 다 초기화 해야 함
         // 매니저 초기화
         reinforceManager.Init();
         shopManager.Init();
         spawnManager.Init();
-        screenManager.GoMain();
+        //screenManager.GoMain();
 
         // 최종 스코어 저장 및 초기화
-        int finishScore = scoreManager.ScoreInit();
+        finalScore.text = scoreManager.ScoreInit() + "마리";
 
         // 스코어 저장 기능(임시)
     }
@@ -196,13 +200,15 @@ public class GameManager : MonoBehaviour
         // 마우스 커서 숨기기
         //mouseManager.InVisible();
 
+        player.SetActive(true);
+
         // 시간 조정
         Time.timeScale = 1;
 
-        // 게임 일시정지
-        gameState = GAME_STATE.RUNNING;
-
         spawnManager.StartSpawnBug();
+
+        // 게임 일시정지 풀기
+        gameState = GAME_STATE.RUNNING;
     }
 
     public void Restart()
@@ -241,6 +247,8 @@ public class GameManager : MonoBehaviour
         // 마우스 보이도록
         //mouseManager.Visible();
 
+        player.SetActive(false);
+
         // 정산 화면 출력
         screenManager.ChangeScreen(SCREEN.PAY);
 
@@ -253,7 +261,9 @@ public class GameManager : MonoBehaviour
     public void NextGame()
     {
         // 정산 및 강화, 구매 진행 후 다음 게임 진행
+        ++level;
         stageManager.NextStage();
+        player.SetActive(true);
         gameState = GAME_STATE.RUNNING;
         spawnManager.StartSpawnBug();
         //mouseManager.InVisible();

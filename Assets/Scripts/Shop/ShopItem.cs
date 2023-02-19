@@ -43,4 +43,9 @@ public class ShopItem : MonoBehaviour
     {
         isLock = false;
     }
+
+    public void Lock()
+    {
+        isLock = true;
+    }
 }

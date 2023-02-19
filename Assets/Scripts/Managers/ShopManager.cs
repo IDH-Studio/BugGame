@@ -51,4 +51,9 @@ public class ShopManager : MonoBehaviour
     {
         shop.UnLock(tool);
     }
+
+    public void LockTool(TOOL tool)
+    {
+        shop.Lock(tool);
+    }
 }

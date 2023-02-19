@@ -16,8 +16,8 @@ public class Mosquito : Bug
 
     protected override void Move()
     {
-        float cos = 0;
-        float sin = 0;
+        float cos;
+        float sin;
         Vector3 moveVec;
 
         if (moveType == 1)

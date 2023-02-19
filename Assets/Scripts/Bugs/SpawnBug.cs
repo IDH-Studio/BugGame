@@ -15,7 +15,8 @@ public class SpawnBug : MonoBehaviour
 
     public void Spawn(Vector2 position)
     {
-        GameManager.instance.prefabManager.GetBug(bugType).GetComponent<Bug>().SetBug(position);
+        GameObject bug = GameManager.instance.prefabManager.GetBug(bugType).GetComponent<Bug>().SetBug(position);
+        bug.SetActive(true);
     }
 
     public void ChangeBug(BUG_TYPE type)

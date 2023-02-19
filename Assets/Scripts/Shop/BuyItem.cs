@@ -34,9 +34,9 @@ public class BuyItem : MonoBehaviour
         // buyItem.GetComponent<Tool>()
         // 구매하려는 아이템의 정보
         ItemName.text = toolInfo.ToolName;
-        ItemRate.text = toolInfo.GetRate();
-        ItemRadius.text = toolInfo.GetRadius();
-        ItemSpeed.text = toolInfo.GetSpeed();
+        ItemRate.text = toolInfo.GetRateText();
+        ItemRadius.text = toolInfo.GetRadiusText();
+        ItemSpeed.text = toolInfo.GetSpeedText();
         ItemPrice.text = itemPrice + "원";
     }
 

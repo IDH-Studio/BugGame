@@ -6,12 +6,13 @@ using UnityEngine;
 public class PrefabManager : MonoBehaviour
 {
     // 벌레, 플레이어
-    //[SerializeField] private GameObject spawnBug;
     [SerializeField] private GameObject[] bugPrefabs;
-    //[SerializeField] private GameObject target;
-    [SerializeField] private GameObject playerHasTool;
-    //[SerializeField] private GameObject player;
     [SerializeField] private GameObject[] hitPrefabs;
+    [SerializeField] private GameObject playerHasTool;
+
+    [Header("▼ HP Bar")]
+    [SerializeField] private GameObject hpImagePrefab;
+    [SerializeField] private GameObject hpBackgroundImagePrefab;
 
     private List<GameObject> objs;
     private List<GameObject>[] bugPools;
@@ -20,23 +21,23 @@ public class PrefabManager : MonoBehaviour
     private void Awake()
     {
         objs = new List<GameObject>();
-        //objs.Insert((int)OBJ_TYPE.TARGET, target);
         objs.Insert((int)OBJ_TYPE.PLAYER_HAS, playerHasTool);
-        //objs.Insert((int)OBJ_TYPE.PLAYER, player);
+        objs.Insert((int)OBJ_TYPE.GAUGE_IMAGE, hpImagePrefab);
+        objs.Insert((int)OBJ_TYPE.GAUGE_BG_IMAGE, hpBackgroundImagePrefab);
 
         bugPools = new List<GameObject>[bugPrefabs.Length];
         for (int i = 0; i < bugPools.Length; ++i)
         {
             bugPools[i] = new List<GameObject>();
         }
-        InitializeBug(30);
+        InitializeBug(20);
 
         hitPools = new List<GameObject>[hitPrefabs.Length];
         for (int i = 0; i < hitPools.Length; ++i)
         {
             hitPools[i] = new List<GameObject>();
         }
-        InitializeHit(20);
+        InitializeHit(10);
     }
 
     private void InitializeBug(int count)
@@ -46,6 +47,12 @@ public class PrefabManager : MonoBehaviour
             for (int i = 0; i < count; ++i)
             {
                 GameObject newBug = Instantiate(bugPrefabs[type], transform);
+
+                newBug.GetComponent<Bug>().SetHPCanvas();
+                newBug.GetComponent<Bug>().SetHPBar(
+                    RequestInstantiate(OBJ_TYPE.GAUGE_BG_IMAGE, newBug.GetComponent<Bug>().HpCanvas.transform),
+                    RequestInstantiate(OBJ_TYPE.GAUGE_IMAGE, newBug.GetComponent<Bug>().HpCanvas.transform));
+
                 newBug.SetActive(false);
                 bugPools[type].Add(newBug);
             }
@@ -80,6 +87,12 @@ public class PrefabManager : MonoBehaviour
     {
         return Instantiate(objs[(int)objType]);
     }
+    
+    public GameObject RequestInstantiate(OBJ_TYPE objType, Transform parent)
+    {
+        return Instantiate(objs[(int)objType], parent);
+    }
+
 
     public GameObject GetBug(BUG_TYPE type)
     {
@@ -92,7 +105,7 @@ public class PrefabManager : MonoBehaviour
             {
                 // 발견하면 selectBug에 할당
                 selectBug = bug;
-                selectBug.SetActive(true);
+                //selectBug.SetActive(true);
                 break;
             }
         }
