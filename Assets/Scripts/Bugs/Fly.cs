@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Fly : Bug
 {
-    public int[] moveDegs = { 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 85, 80 };
-    public float minMoveDelay = 0.3f;
-    public float maxMoveDelay = 0.7f;
+    public float minMoveDelay;
+    public float maxMoveDelay;
+    public int minMoveDeg;
+    public int maxMoveDeg;
 
-    private int moveDeg = 15;
+    private int moveDeg = 10;
     private float moveDelay = 0.5f;
     private float moveTime = 0.0f;
     private int moveType = 1;
@@ -36,10 +37,12 @@ public class Fly : Bug
 
         transform.position += moveVec * speed * Time.deltaTime;
 
+        LookTarget();
+
         moveTime += Time.deltaTime;
         if (moveTime >= moveDelay)
         {
-            moveDeg = moveDegs[Random.Range(0, moveDegs.Length)];
+            moveDeg = Random.Range(minMoveDeg, maxMoveDeg);
             moveDelay = Random.Range(minMoveDelay, maxMoveDelay);
             moveTime = 0.0f;
             moveType = Random.Range(1, 4);

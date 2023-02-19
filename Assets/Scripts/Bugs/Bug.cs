@@ -25,7 +25,7 @@ public class Bug : MonoBehaviour
 
     private bool isCollision = false;
     private bool isMoving = true;
-    private SpriteRenderer sprite;
+    protected SpriteRenderer sprite;
     GameObject hpImage;
     GameObject hpBackgroundImage;
 
@@ -99,8 +99,6 @@ public class Bug : MonoBehaviour
         direction = transform.position - GameManager.instance.CurrentTarget.transform.position;
         dirVec = direction.normalized;
 
-        LookTarget();
-
         sprite.flipY = transform.position.x < GameManager.instance.CurrentTarget.transform.position.x ? true : false;
 
         // 충돌 검사 및 움직임
@@ -125,9 +123,10 @@ public class Bug : MonoBehaviour
         transform.position =
             Vector2.MoveTowards(transform.position,
             GameManager.instance.CurrentTarget.transform.position, speed * Time.deltaTime);
+        LookTarget();
     }
 
-    void LookTarget()
+    protected virtual void LookTarget()
     {
         angle = Mathf.Atan2(dirVec.y, dirVec.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle, Vector3.forward);

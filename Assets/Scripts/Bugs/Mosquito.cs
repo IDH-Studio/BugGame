@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class Mosquito : Bug
 {
-    public int[] moveDegs = { 15, 30, 45, 60 };
-    public float minMoveDelay = 0.3f;
-    public float maxMoveDelay = 0.7f;
+    public float minMoveDelay;
+    public float maxMoveDelay;
+    public int minMoveDeg;
+    public int maxMoveDeg;
 
     private int moveDeg = 15;
     private float moveDelay = 0.5f;
@@ -37,10 +38,12 @@ public class Mosquito : Bug
 
         transform.position += moveVec * speed * Time.deltaTime;
 
+        LookTarget();
+
         moveTime += Time.deltaTime;
         if (moveTime >= moveDelay)
         {
-            moveDeg = moveDegs[Random.Range(0, moveDegs.Length)];
+            moveDeg = Random.Range(minMoveDeg, maxMoveDeg);
             moveDelay = Random.Range(minMoveDelay, maxMoveDelay);
             moveTime = 0.0f;
             moveType = Random.Range(1, 4);
