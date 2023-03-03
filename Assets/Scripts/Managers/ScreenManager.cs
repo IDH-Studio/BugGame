@@ -64,6 +64,13 @@ public class ScreenManager : MonoBehaviour
         ScreenStack.Pop();
         // UI ²ô±â
         GameManager.instance.uiManager.InActiveUI();
+<<<<<<< Updated upstream
+=======
+        GameManager.instance.backgroundManager.ChangeBackground();
+
+        if (GameManager.instance.GameState == GAME_STATE.PAUSE) { return; }
+        if (ScreenStack.Peek() == SCREEN.PAY) { GameManager.instance.payManager.ShowMoney(); }
+>>>>>>> Stashed changes
         BGM(ScreenStack.Peek());
     }
 }

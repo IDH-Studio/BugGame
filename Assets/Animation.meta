@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:Assets/Animation.meta
 guid: 0bf60bf4f3d11544b8863484ed627d89
+========
+guid: b362d80f49ff2d74d8769ebe1d61306f
+>>>>>>>> Stashed changes:Assets/Unity.VisualScripting.Generated/VisualScripting.Core.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

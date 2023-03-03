@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream:Assets/Samples/2D Animation/8.0.2/Samples/README.md.meta
 guid: 18c8a7bc27a0f46f6bf836c5cbb36ee4
+=======
+guid: 6cedc7fe7ab6934499d308a57438eace
+>>>>>>> Stashed changes:Assets/StreamingAssets/google-services-desktop.json.meta
 TextScriptImporter:
   externalObjects: {}
   userData: 

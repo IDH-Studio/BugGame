@@ -128,8 +128,13 @@ public class GameManager : MonoBehaviour
     {
         // 게임 오버 조건
         GameEnd();
+<<<<<<< Updated upstream
         Debug.Log("게임 오버!");
         uiManager.GoMain();
+=======
+        databaseManager.GetData(false);
+        screenManager.ChangeScreen(SCREEN.GAMEOVER);
+>>>>>>> Stashed changes
     }
 
     public void GameEnd()
@@ -157,7 +162,14 @@ public class GameManager : MonoBehaviour
         spawnManager.Init();
 
         // 최종 스코어 저장 및 초기화
+<<<<<<< Updated upstream
         int finishScore = scoreManager.ScoreInit();
+=======
+        gameScore = scoreManager.ScoreInit();
+        finalScore.text = gameScore + "마리";
+        databaseManager.PutBackScores();
+    }
+>>>>>>> Stashed changes
 
         // 스코어 저장 기능(임시)
     }
@@ -244,6 +256,12 @@ public class GameManager : MonoBehaviour
         //mouseManager.Visible();
 
         // 정산 화면 출력
+<<<<<<< Updated upstream
+=======
+        payManager.PayMoney();
+        payManager.ShowMoney();
+
+>>>>>>> Stashed changes
         screenManager.ChangeScreen(SCREEN.PAY);
 
         // 벌레 스폰 중단
@@ -280,4 +298,54 @@ public class GameManager : MonoBehaviour
     {
         this.gameState = gameState;
     }
+<<<<<<< Updated upstream
+=======
+
+    public void CheckNicknameLength()
+    {
+        if (nicknameField.text.Length <= 10) { return; }
+        nicknameField.text = nicknameField.text.Substring(0, 10);
+    }
+
+    public void ShowInputNickname()
+    {
+        if (!isSave)
+        {
+            inputNicknameObj.SetActive(true);
+        }
+    }
+
+    public void SaveScore()
+    {
+        string nickname = nicknameField.text;
+
+        if (nickname == "" || nickname.Length > 10)
+        {
+            return;
+        }
+
+        // 스코어 저장 기능
+        if (databaseManager.WriteData(nickname, gameScore))
+        {
+            print("데이터 저장 완료");
+        }
+        else
+        {
+            print("데이터 저장 실패");
+        }
+        nicknameField.text = "";
+
+        // 데이터를 저장했으니 기존에 있던 스코어 목록을 갱신해준다.
+        scoreManager.InitScoreData();
+        inputNicknameObj.SetActive(false);
+        isSave = true;
+
+        databaseManager.GetData(true);
+    }
+
+    public void CancelInputNickname()
+    {
+        inputNicknameObj.SetActive(false);
+    }
+>>>>>>> Stashed changes
 }

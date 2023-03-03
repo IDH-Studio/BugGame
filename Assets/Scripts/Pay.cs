@@ -18,7 +18,11 @@ public class Pay : MonoBehaviour
         // 플레이어의 현재 돈에 모은 돈을 추가한다.
         money = GameManager.instance.scoreManager.Score * 100;
         GameManager.instance.CurrentPlayer.ChangeMoney(money);
+<<<<<<< Updated upstream
         PlayerMoney = GameManager.instance.CurrentPlayer.Money;
+=======
+    }
+>>>>>>> Stashed changes
 
         // 모은 돈을 출력한다.
         // 플레이어가 가지고 있는 돈을 불러와 현재 잔액을 출력한다.
